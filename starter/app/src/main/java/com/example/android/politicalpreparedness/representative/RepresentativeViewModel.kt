@@ -1,10 +1,21 @@
 package com.example.android.politicalpreparedness.representative
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.politicalpreparedness.representative.model.Representative
 
 class RepresentativeViewModel: ViewModel() {
 
-    //TODO: Establish live data for representatives and address
+    private val _representativesList = MutableLiveData<List<Representative>>(emptyList())
+    val representativesList : LiveData<List<Representative>>
+        get() = _representativesList
+
+    val addressLine1: MutableLiveData<String?> = MutableLiveData()
+    val addressLine2: MutableLiveData<String?> = MutableLiveData()
+    val city: MutableLiveData<String?> = MutableLiveData()
+    val zipCode: MutableLiveData<String?> = MutableLiveData()
+    val state: MutableLiveData<String?> = MutableLiveData()
 
     //TODO: Create function to fetch representatives from API from a provided address
 

@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
+import com.example.android.politicalpreparedness.databinding.RepresentativeListItemBinding
+import com.example.android.politicalpreparedness.election.adapter.ElectionListener
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
+class RepresentativeListAdapter(val clickListener: RepresentativeListener) :
+    ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
         return RepresentativeViewHolder.from(parent)
@@ -27,26 +29,40 @@ class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewH
     }
 }
 
-class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder private constructor(private val binding: RepresentativeListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Representative) {
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
+        item.official.channels?.let {
+            showSocialLinks(it)
+        }
+
+        item.official.urls?.let { showWWWLinks(it) }
 
         binding.executePendingBindings()
     }
 
-    //TODO: Add companion object to inflate ViewHolder (from)
+    companion object {
+        fun from(parent: ViewGroup): RepresentativeViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = RepresentativeListItemBinding.inflate(layoutInflater, parent, false)
+            return RepresentativeViewHolder(binding)
+        }
+    }
 
     private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)
-        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIcon, facebookUrl) }
+        if (!facebookUrl.isNullOrBlank()) {
+            enableLink(binding.facebookIcon, facebookUrl)
+        }
 
         val twitterUrl = getTwitterUrl(channels)
-        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIcon, twitterUrl) }
+        if (!twitterUrl.isNullOrBlank()) {
+            enableLink(binding.twitterIcon, twitterUrl)
+        }
     }
 
     private fun showWWWLinks(urls: List<String>) {
@@ -55,14 +71,14 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 
     private fun getFacebookUrl(channels: List<Channel>): String? {
         return channels.filter { channel -> channel.type == "Facebook" }
-                .map { channel -> "https://www.facebook.com/${channel.id}" }
-                .firstOrNull()
+            .map { channel -> "https://www.facebook.com/${channel.id}" }
+            .firstOrNull()
     }
 
     private fun getTwitterUrl(channels: List<Channel>): String? {
         return channels.filter { channel -> channel.type == "Twitter" }
-                .map { channel -> "https://www.twitter.com/${channel.id}" }
-                .firstOrNull()
+            .map { channel -> "https://www.twitter.com/${channel.id}" }
+            .firstOrNull()
     }
 
     private fun enableLink(view: ImageView, url: String) {
@@ -78,6 +94,16 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 
 }
 
-//TODO: Create RepresentativeDiffCallback
+class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem.official.name == newItem.official.name
+    }
 
-//TODO: Create RepresentativeListener
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem == newItem
+    }
+}
+
+class RepresentativeListener(val clickListener: (representative: Representative) -> Unit) {
+    fun onClick(representative: Representative) = clickListener(representative)
+}

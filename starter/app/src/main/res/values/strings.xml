@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Political Preparedness</string>
+    <string name="button_find_representatives">Find My Representatives</string>
+    <string name="button_upcoming_elections">Upcoming Elections</string>
+    <string name="app_logo_description">App Logo</string>
+    <string name="permission_denied_explanation">Location permission denied!</string>
 
-    <!-- TODO: Add necessary string values -->
+
+    <string name="editText_address_line_1">Address Line 1</string>
+    <string name="editText_address_line_2">Address Line 2</string>
+    <string name="editText_city">City</string>
+    <string name="editText_zipCode">Zip</string>
+    <string name="button_useMyLocation">Use My Location</string>
+    <string name="textView_myRepresentatives">My Representatives</string>
+    <string name="representative_photo_description">Representative Photo</string>
+    <string name="icon_facebook_description">Facebook Icon</string>
+    <string name="icon_twitter_description">Twitter Icon</string>
+    <string name="icon_www_description">WWW Icon</string>
 
 </resources>
