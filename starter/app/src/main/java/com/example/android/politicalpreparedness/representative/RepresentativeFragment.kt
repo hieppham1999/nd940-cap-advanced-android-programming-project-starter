@@ -183,6 +183,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun android.location.Address.toAppAddress(): Address {
+        // TODO: handle when some fields return null?
         return Address(
             thoroughfare,
             subThoroughfare,
