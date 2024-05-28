@@ -38,8 +38,8 @@ class RepresentativeViewModel: ViewModel() {
         if (currentAddress == null) return
     }
 
-    fun parseAddressToInputFields(address: Address) {
-        address.let {
+    private fun parseAddressToInputFields(address: Address?) {
+        address?.let {
             addressLine1.value = it.line1
             addressLine2.value = it.line2
             city.value = it.city
@@ -48,7 +48,7 @@ class RepresentativeViewModel: ViewModel() {
         }
     }
 
-    fun fetchInputFromAddressThenSearch(address: Address) {
+    fun fetchInputFromAddressThenSearch(address: Address?) {
         parseAddressToInputFields(address)
         searchForRepresentative()
     }

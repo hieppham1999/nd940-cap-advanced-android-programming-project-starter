@@ -34,8 +34,6 @@ class DetailFragment : Fragment() {
         ViewModelProvider(this)[RepresentativeViewModel::class.java]
     }
 
-    private var currentLocation: android.location.Address? = null
-
     companion object {
         //TODO: Add Constant for Location request
     }
@@ -182,8 +180,11 @@ class DetailFragment : Fragment() {
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
-    private fun android.location.Address.toAppAddress(): Address {
-        // TODO: handle when some fields return null?
+    private fun android.location.Address.toAppAddress(): Address? {
+        if (thoroughfare == null || subThoroughfare == null || locality == null || adminArea == null || postalCode == null) {
+            // show error
+           return null
+        }
         return Address(
             thoroughfare,
             subThoroughfare,
@@ -192,5 +193,4 @@ class DetailFragment : Fragment() {
             postalCode
         )
     }
-
 }

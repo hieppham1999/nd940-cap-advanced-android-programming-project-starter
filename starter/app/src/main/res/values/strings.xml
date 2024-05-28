@@ -18,4 +18,8 @@
     <string name="icon_twitter_description">Twitter Icon</string>
     <string name="icon_www_description">WWW Icon</string>
 
+    <!-- Elections Fragment -->
+    <string name="textView_upcoming_elections">Upcoming Elections</string>
+    <string name="textView_saved_elections">Saved Elections</string>
+
 </resources>
