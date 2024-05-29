@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlinx-serialization'
     id 'kotlin-parcelize'
+    id 'com.google.dagger.hilt.android' version "$version_hilt"
 }
 
 android {

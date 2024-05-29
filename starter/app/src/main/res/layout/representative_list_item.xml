@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/representative_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,13 +30,14 @@
             android:contentDescription="@string/representative_photo_description" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/representative_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,13 +46,17 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingStart="10dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -71,25 +76,24 @@
                         >
                         <ImageView
                             android:id="@+id/facebook_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             app:srcCompat="@drawable/ic_facebook"
+                            android:layout_marginEnd="@dimen/default_button_margin"
                             android:contentDescription="@string/icon_facebook_description" />
                         <ImageView
                             android:id="@+id/twitter_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             app:srcCompat="@drawable/ic_twitter"
+                            android:layout_marginEnd="@dimen/default_button_margin"
                             android:contentDescription="@string/icon_twitter_description" />
                         <ImageView
                             android:id="@+id/www_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             app:srcCompat="@drawable/ic_www"
-                            android:contentDescription="@string/icon_twitter_description" />
+                            android:contentDescription="@string/icon_www_description" />
                     </LinearLayout>
 
 

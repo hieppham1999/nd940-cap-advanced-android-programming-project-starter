@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.base.BaseViewModel
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.utils.DataResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//TODO: Construct ViewModel and provide election datasource
+@HiltViewModel
 class ElectionsViewModel @Inject constructor(
     private val electionRepository: ElectionRepository
 ): BaseViewModel()  {
@@ -36,5 +37,10 @@ class ElectionsViewModel @Inject constructor(
             showLoading.value = false
         }
     }
+
+    init {
+        refreshUpcomingElectionsList()
+    }
+
 
 }

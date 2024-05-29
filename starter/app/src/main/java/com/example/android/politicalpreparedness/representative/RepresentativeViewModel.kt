@@ -2,11 +2,14 @@ package com.example.android.politicalpreparedness.representative
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.android.politicalpreparedness.base.BaseViewModel
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RepresentativeViewModel: ViewModel() {
+@HiltViewModel
+class RepresentativeViewModel @Inject constructor(): BaseViewModel(){
 
     private val _representativesList = MutableLiveData<List<Representative>>(emptyList())
     val representativesList : LiveData<List<Representative>>

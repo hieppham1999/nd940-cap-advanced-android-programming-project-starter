@@ -25,9 +25,11 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.util.Locale
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private val viewModel: RepresentativeViewModel by lazy {

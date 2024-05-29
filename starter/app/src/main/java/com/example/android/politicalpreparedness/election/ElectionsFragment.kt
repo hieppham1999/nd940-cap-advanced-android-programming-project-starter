@@ -5,18 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
 import com.example.android.politicalpreparedness.network.models.Election
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ElectionsFragment: Fragment() {
 
-    private val viewModel: ElectionsViewModel by lazy {
-        ViewModelProvider(this)[ElectionsViewModel::class.java]
-    }
+    private val viewModel: ElectionsViewModel by viewModels()
+
+    private lateinit var upcomingElectionsAdapter: ElectionListAdapter
+    private lateinit var savedElectionsAdapter: ElectionListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +38,17 @@ class ElectionsFragment: Fragment() {
 
         binding.viewmodel = viewModel
 
-        val adapter = ElectionListAdapter(ElectionListener { election ->
+        upcomingElectionsAdapter = ElectionListAdapter(ElectionListener { election ->
             navigateToVoteInfo(election)
         })
-        binding.electionList.adapter = adapter
-        binding.myElectionList.adapter = adapter
+
+        savedElectionsAdapter = ElectionListAdapter(ElectionListener { election ->
+            navigateToVoteInfo(election)
+        })
+
+
+        binding.electionList.adapter = upcomingElectionsAdapter
+        binding.myElectionList.adapter = savedElectionsAdapter
 
 
         // TODO: Initiate recycler adapters
@@ -48,6 +59,15 @@ class ElectionsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.upcomingElectionList.observe(viewLifecycleOwner) { elections ->
+            upcomingElectionsAdapter.submitList(elections)
+        }
+
+        viewModel.savedElectionList.observe(viewLifecycleOwner) { elections ->
+            savedElectionsAdapter.submitList(elections)
+        }
+
     }
 
     // TODO: Refresh adapters when fragment loads
@@ -60,4 +80,5 @@ class ElectionsFragment: Fragment() {
             )
         )
     }
+
 }

@@ -2,6 +2,7 @@
 <resources>
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_button_width">16dp</dimen>
+    <dimen name="default_button_margin">5dp</dimen>
 
 
 </resources>
