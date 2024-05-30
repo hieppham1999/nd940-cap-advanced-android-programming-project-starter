@@ -26,4 +26,16 @@ class ElectionRepositoryImpl @Inject constructor(private val service: CivicsApiS
     override fun getSavedElections(): LiveData<List<Election>> {
         return electionDao.getAllElections()
     }
+
+    override suspend fun getElectionById(id: Int): Election? {
+        return electionDao.getElectionById(id)
+    }
+
+    override suspend fun saveElection(election: Election) {
+        return electionDao.insertElection(election)
+    }
+
+    override suspend fun deleteElection(election: Election) {
+        electionDao.deleteElection(election)
+    }
 }

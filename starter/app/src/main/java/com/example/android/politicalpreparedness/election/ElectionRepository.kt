@@ -9,4 +9,9 @@ interface ElectionRepository {
     suspend fun getUpcomingElections(): DataResult<ElectionResponse>
 
     fun getSavedElections() : LiveData<List<Election>>
+
+    suspend fun getElectionById(id: Int): Election?
+
+    suspend fun saveElection(election: Election)
+    suspend fun deleteElection(election: Election)
 }

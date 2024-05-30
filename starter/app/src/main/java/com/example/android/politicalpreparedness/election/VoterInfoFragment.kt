@@ -5,10 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class VoterInfoFragment : Fragment() {
+
+    private val viewModel: VoterInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,9 +22,11 @@ class VoterInfoFragment : Fragment() {
         savedInstanceState: Bundle?)
     : View? {
 
-        // TODO: Add ViewModel values and create ViewModel
+        val binding = FragmentVoterInfoBinding.inflate(inflater)
 
-        // TODO: Add binding values
+        binding.lifecycleOwner = this
+
+        binding.viewmodel = viewModel
 
         // TODO: Populate voter info -- hide views without provided data.
 
@@ -30,7 +38,18 @@ class VoterInfoFragment : Fragment() {
 
         // TODO: Handle save button UI state
         // TODO: cont'd Handle save button clicks
-        return null
+
+        binding.buttonSaveElection.setOnClickListener {
+            viewModel.followElection()
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Timber.d(viewModel.election.name)
     }
 
     // TODO: Create method to load URL intents

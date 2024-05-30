@@ -28,9 +28,6 @@ class ElectionsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?)
     : View? {
-        // TODO: Add ViewModel values and create ViewModel
-
-        // TODO: Add binding values
 
         val binding = FragmentElectionBinding.inflate(inflater)
 
@@ -70,13 +67,10 @@ class ElectionsFragment: Fragment() {
 
     }
 
-    // TODO: Refresh adapters when fragment loads
-
     private fun navigateToVoteInfo(election: Election) {
         this.findNavController().navigate(
             ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                election.id,
-                election.division
+                election
             )
         )
     }

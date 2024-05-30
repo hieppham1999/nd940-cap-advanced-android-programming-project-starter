@@ -20,6 +20,8 @@
             android:id="@+id/search_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/textView_representative_search_header"
+            style="@style/HeaderText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,6 +74,7 @@
             android:layout_height="0dp"
             android:autofillHints=""
             android:inputType="textPostalAddress"
+            android:entries="@array/states"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/city"
@@ -108,17 +111,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/button_search" />
 
-        <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/representative_title"
             android:text="@string/textView_myRepresentatives"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/HeaderText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_use_my_location" />
-
-        <!-- TODO: Add Representatives RecyclerView -->
-
 
         <!-- TODO: Add visual styling and content -->
         <androidx.recyclerview.widget.RecyclerView
