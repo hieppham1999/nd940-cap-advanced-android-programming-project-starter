@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.android.politicalpreparedness.base.BaseFragment
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
@@ -16,9 +17,9 @@ import com.example.android.politicalpreparedness.network.models.Election
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ElectionsFragment: Fragment() {
+class ElectionsFragment: BaseFragment() {
 
-    private val viewModel: ElectionsViewModel by viewModels()
+    override val viewModel: ElectionsViewModel by viewModels()
 
     private lateinit var upcomingElectionsAdapter: ElectionListAdapter
     private lateinit var savedElectionsAdapter: ElectionListAdapter

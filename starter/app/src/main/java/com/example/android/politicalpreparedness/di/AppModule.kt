@@ -5,7 +5,6 @@ import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.election.ElectionRepository
 import com.example.android.politicalpreparedness.election.ElectionRepositoryImpl
-import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.CivicsApiService
 import com.example.android.politicalpreparedness.representative.RepresentativeRepository
 import com.example.android.politicalpreparedness.representative.RepresentativeRepositoryImpl
@@ -45,7 +44,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofitService(): CivicsApiService {
-        return CivicsApi.retrofitService
+        return CivicsApiService.create()
     }
 
 }

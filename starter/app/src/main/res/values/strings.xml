@@ -30,4 +30,8 @@
     <string name="button_follow_election">Follow Election</string>
     <string name="button_unfollow_election">Unfollow Election</string>
 
+    <!-- Error Message -->
+    <string name="error">Error</string>
+
+
 </resources>

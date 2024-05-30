@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.base.BaseFragment
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
@@ -30,11 +30,11 @@ import timber.log.Timber
 import java.util.Locale
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailFragment : BaseFragment() {
 
-    private val viewModel: RepresentativeViewModel by lazy {
-        ViewModelProvider(this)[RepresentativeViewModel::class.java]
-    }
+    override val viewModel: RepresentativeViewModel by viewModels()
+
+    private lateinit var representativeListAdapter: RepresentativeListAdapter
 
     companion object {
         //TODO: Add Constant for Location request
@@ -70,10 +70,10 @@ class DetailFragment : Fragment() {
 
         binding.viewmodel = viewModel
 
-        val adapter = RepresentativeListAdapter(RepresentativeListener {
+        representativeListAdapter  = RepresentativeListAdapter(RepresentativeListener {
 
         })
-        binding.representativeList.adapter = adapter
+        binding.representativeList.adapter = representativeListAdapter
 
         //TODO: Define and assign Representative adapter
 
@@ -94,35 +94,13 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        //TODO: Handle location permission result to get location on permission granted
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-//    private fun checkLocationPermissions(): Boolean {
-//        return if (isPermissionGranted()) {
-//            true
-//        } else {
-//            requestPermissionLauncher.launch(
-//                arrayOf(
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_FINE_LOCATION,
-//                )
-//            )
-//            false
-//        }
-//    }
-//
-//    private fun isPermissionGranted() : Boolean {
-//        return (ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) == PackageManager.PERMISSION_GRANTED
-//        )
-//    }
+        viewModel.representativesList.observe(viewLifecycleOwner) { representativeList ->
+            representativeListAdapter.submitList(representativeList)
+        }
+    }
 
     private fun getLocationAndSearchForRepresentatives() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())

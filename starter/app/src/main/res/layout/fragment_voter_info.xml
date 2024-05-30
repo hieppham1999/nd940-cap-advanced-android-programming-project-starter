@@ -75,7 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/state_ballot"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            tools:text="state_correspondence_header"/>
 
         <!-- TODO: Add data binding -->
         <TextView
@@ -83,7 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            tools:text="address"/>
 
         <Button
             android:id="@+id/button_save_election"
