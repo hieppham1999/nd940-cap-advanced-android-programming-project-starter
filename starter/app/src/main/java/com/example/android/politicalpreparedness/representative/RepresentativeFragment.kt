@@ -36,10 +36,6 @@ class DetailFragment : BaseFragment() {
 
     private lateinit var representativeListAdapter: RepresentativeListAdapter
 
-    companion object {
-        //TODO: Add Constant for Location request
-    }
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -75,12 +71,6 @@ class DetailFragment : BaseFragment() {
         })
         binding.representativeList.adapter = representativeListAdapter
 
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
-        //TODO: Establish button listeners for field and location search
-
         binding.buttonUseMyLocation.setOnClickListener {
             hideKeyboard()
             getLocationAndSearchForRepresentatives()
@@ -100,6 +90,7 @@ class DetailFragment : BaseFragment() {
         viewModel.representativesList.observe(viewLifecycleOwner) { representativeList ->
             representativeListAdapter.submitList(representativeList)
         }
+
     }
 
     private fun getLocationAndSearchForRepresentatives() {

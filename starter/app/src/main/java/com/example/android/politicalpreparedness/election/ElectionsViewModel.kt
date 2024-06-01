@@ -19,7 +19,10 @@ class ElectionsViewModel @Inject constructor(
     val savedElectionList = electionRepository.getSavedElections()
     val upcomingElectionList : LiveData<List<Election>>
         get() = _upcomingElectionList
-    
+
+    init {
+        refreshUpcomingElectionsList()
+    }
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
 
@@ -37,10 +40,5 @@ class ElectionsViewModel @Inject constructor(
             showLoading.value = false
         }
     }
-
-    init {
-        refreshUpcomingElectionsList()
-    }
-
 
 }

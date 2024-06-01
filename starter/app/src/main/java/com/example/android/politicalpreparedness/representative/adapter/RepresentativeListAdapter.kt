@@ -36,6 +36,11 @@ class RepresentativeViewHolder private constructor(private val binding: Represen
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
+        // Default is
+        binding.facebookIcon.visibility = View.INVISIBLE
+        binding.twitterIcon.visibility = View.INVISIBLE
+        binding.wwwIcon.visibility = View.INVISIBLE
+
         item.official.channels?.let {
             showSocialLinks(it)
         }

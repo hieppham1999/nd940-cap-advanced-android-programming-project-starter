@@ -3,24 +3,35 @@ package com.example.android.politicalpreparedness.election
 import androidx.lifecycle.LiveData
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApiService
-import com.example.android.politicalpreparedness.network.models.Division
+import com.example.android.politicalpreparedness.network.CivicsHttpClient
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.utils.DataResult
-import java.util.Date
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class ElectionRepositoryImpl @Inject constructor(private val service: CivicsApiService, private val electionDao: ElectionDao) :
     ElectionRepository {
-    override suspend fun getUpcomingElections(): DataResult<ElectionResponse> {
-        return DataResult.Success(
-            ElectionResponse("kind", listOf(
-                Election(1, "Election1", Date(), Division("1", "US", "Cali")),
-                Election(2, "Election2", Date(), Division("1", "US", "Cali")),
-                Election(3, "Election3", Date(), Division("1", "US", "Cali")),
-                Election(4, "Election4", Date(), Division("1", "US", "Cali")),
-            ))
-        )
+    override suspend fun getUpcomingElections(): DataResult<ElectionResponse> = withContext(Dispatchers.IO) {
+        try {
+            val result = service.getElections(CivicsHttpClient.API_KEY)
+            DataResult.Success(result)
+        } catch (ex: Exception) {
+            Timber.e(ex.message)
+            DataResult.Failure(ex.message ?: "")
+        }
+    }
+
+    override suspend fun getVoterInfo(electionId: String, address: String): DataResult<VoterInfoResponse> = withContext(Dispatchers.IO) {
+        try {
+            val result = service.getVoterInfo(CivicsHttpClient.API_KEY, address, electionId)
+            DataResult.Success(result)
+        } catch (ex: Exception) {
+            DataResult.Failure(ex.message ?: "")
+        }
     }
 
     override fun getSavedElections(): LiveData<List<Election>> {

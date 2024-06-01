@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.representative
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +12,13 @@ import com.example.android.politicalpreparedness.representative.model.Representa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("StaticFieldLeak")
 @HiltViewModel
 class RepresentativeViewModel @Inject constructor(
+     @ApplicationContext private val context: Context,
     private val representativeRepository: RepresentativeRepository,
 ): BaseViewModel(){
 
@@ -22,16 +26,15 @@ class RepresentativeViewModel @Inject constructor(
     val representativesList : LiveData<List<Representative>>
         get() = _representativesList
 
-    val currentAddress : Address?
+    private val currentAddress : Address?
         get() = addressFromInputFields()
 
     val addressLine1: MutableLiveData<String?> = MutableLiveData()
     val addressLine2: MutableLiveData<String?> = MutableLiveData()
     val city: MutableLiveData<String?> = MutableLiveData()
     val zipCode: MutableLiveData<String?> = MutableLiveData()
-    val state: MutableLiveData<String?> = MutableLiveData()
+    val state: MutableLiveData<String> = MutableLiveData(context.resources.getStringArray(R.array.states)[0])
 
-    //TODO: Create function to fetch representatives from API from a provided address
 
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
@@ -51,6 +54,7 @@ class RepresentativeViewModel @Inject constructor(
 
             if (result.isSuccess && result.resultData != null) {
                 _representativesList.value = result.resultData!!.offices.flatMap { office ->
+                    Timber.d(office.toString())
                     office.getRepresentatives(result.resultData!!.officials)
                 }
             } else {
@@ -87,13 +91,4 @@ class RepresentativeViewModel @Inject constructor(
             state.value!!
         )
     }
-
-
-
-
-
-    //TODO: Create function get address from geo location
-
-    //TODO: Create function to get address from individual fields
-
 }

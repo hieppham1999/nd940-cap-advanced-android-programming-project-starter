@@ -1,20 +1,22 @@
 package com.example.android.politicalpreparedness.election
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class VoterInfoFragment : Fragment() {
 
     private val viewModel: VoterInfoViewModel by viewModels()
+    private lateinit var binding: FragmentVoterInfoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,22 +24,40 @@ class VoterInfoFragment : Fragment() {
         savedInstanceState: Bundle?)
     : View? {
 
-        val binding = FragmentVoterInfoBinding.inflate(inflater)
+        binding = FragmentVoterInfoBinding.inflate(inflater)
 
         binding.lifecycleOwner = this
 
         binding.viewmodel = viewModel
 
-        // TODO: Populate voter info -- hide views without provided data.
+        binding.electionName.setTitleTextColor(requireContext().getColor(R.color.white))
+
+        viewModel.voterInformation.observe(viewLifecycleOwner) {
+            it?.let {
+
+                it.ballotInfoUrl?.let { ballotUrl ->
+                    enableLink(binding.stateBallot, ballotUrl)
+                }
+
+                it.votingLocationFinderUrl?.let { locationUrl ->
+                    enableLink(binding.stateLocations, locationUrl)
+                }
+
+                it.correspondenceAddress?.let {
+                    binding.stateCorrespondenceHeader.visibility = View.VISIBLE
+                }
+
+                it.correspondenceAddress?.let {
+                    binding.stateAddress.visibility = View.VISIBLE
+                }
+            }
+        }
+
 
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
         */
 
-        // TODO: Handle loading of URLs
-
-        // TODO: Handle save button UI state
-        // TODO: cont'd Handle save button clicks
 
         binding.buttonSaveElection.setOnClickListener {
             viewModel.followElection()
@@ -46,11 +66,17 @@ class VoterInfoFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        Timber.d(viewModel.election.name)
+    private fun enableLink(view: View, url: String) {
+        view.visibility = View.VISIBLE
+        view.setOnClickListener {
+            setIntent(url)
+        }
     }
 
-    // TODO: Create method to load URL intents
+    private fun setIntent(url: String) {
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
 }
