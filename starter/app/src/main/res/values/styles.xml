@@ -9,6 +9,42 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- TODO: Add necessary styles -->
+    <style name="HeaderText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray50</item>
+    </style>
+
+    <style name="HeaderText2" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray50</item>
+    </style>
+
+    <style name="ItemTitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray50</item>
+    </style>
+
+    <style name="ItemSubtitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/gray50</item>
+    </style>
+
+    <style name="primaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginHorizontal">@dimen/default_button_margin</item>
+        <item name="android:layout_marginVertical">10dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="title1" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textColor">@color/gray50</item>
+    </style>
 
 </resources>
