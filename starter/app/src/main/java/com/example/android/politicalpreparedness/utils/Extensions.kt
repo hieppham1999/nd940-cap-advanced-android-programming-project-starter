@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.utils
 
+import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 
@@ -16,4 +17,17 @@ fun VoterInfoResponse.toVoterInfo(): VoterInfo? {
     } else {
         null
     }
+}
+
+fun android.location.Address.toAppAddress(): Address? {
+    if (thoroughfare == null || subThoroughfare == null || locality == null || adminArea == null || postalCode == null) {
+        return null
+    }
+    return Address(
+        thoroughfare,
+        subThoroughfare,
+        locality,
+        adminArea,
+        postalCode
+    )
 }
