@@ -1,7 +1,7 @@
 package com.example.android.politicalpreparedness.utils
 
 import com.example.android.politicalpreparedness.network.models.Address
-import com.example.android.politicalpreparedness.network.models.VoterInfo
+import com.example.android.politicalpreparedness.representative.model.VoterInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 
 fun VoterInfoResponse.toVoterInfo(): VoterInfo? {

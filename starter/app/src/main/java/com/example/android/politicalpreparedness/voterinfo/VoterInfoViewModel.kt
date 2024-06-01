@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.election
+package com.example.android.politicalpreparedness.voterinfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,9 +6,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.Constants
+import com.example.android.politicalpreparedness.election.ElectionRepository
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.VoterInfo
+import com.example.android.politicalpreparedness.representative.model.VoterInfo
 import com.example.android.politicalpreparedness.utils.DataResult
 import com.example.android.politicalpreparedness.utils.toVoterInfo
 import dagger.hilt.android.lifecycle.HiltViewModel

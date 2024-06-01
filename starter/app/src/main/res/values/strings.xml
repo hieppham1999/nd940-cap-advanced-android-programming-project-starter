@@ -4,7 +4,6 @@
     <string name="button_find_representatives">Find My Representatives</string>
     <string name="button_upcoming_elections">Upcoming Elections</string>
     <string name="app_logo_description">App Logo</string>
-    <string name="permission_denied_explanation">Location permission denied!</string>
 
     <!-- Representative Fragment -->
     <string name="textView_representative_search_header">Representative Search</string>
@@ -33,6 +32,8 @@
     <!-- Error Message -->
     <string name="error">Error</string>
     <string name="location_required_error">Location services must be enabled to use the app</string>
+    <string name="permission_denied_explanation">Location permission denied!</string>
+    <string name="error_parse_location">Error while parsing your location, please try again later!</string>
 
 
 </resources>

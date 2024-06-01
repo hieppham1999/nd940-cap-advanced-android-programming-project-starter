@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel"/>
+            type="com.example.android.politicalpreparedness.voterinfo.VoterInfoViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

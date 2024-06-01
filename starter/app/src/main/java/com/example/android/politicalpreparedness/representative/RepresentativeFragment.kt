@@ -8,7 +8,6 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -20,7 +19,6 @@ import com.example.android.politicalpreparedness.Constants.DEFAULT_LOCATION_REQU
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.base.BaseFragment
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
-import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
 import com.example.android.politicalpreparedness.utils.toAppAddress
@@ -69,9 +67,11 @@ class DetailFragment : BaseFragment() {
         const val REQUEST_TURN_DEVICE_LOCATION_ON = 29
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         val binding = FragmentRepresentativeBinding.inflate(inflater)
 
@@ -79,7 +79,7 @@ class DetailFragment : BaseFragment() {
 
         binding.viewmodel = viewModel
 
-        representativeListAdapter  = RepresentativeListAdapter(RepresentativeListener {
+        representativeListAdapter = RepresentativeListAdapter(RepresentativeListener {
 
         })
         binding.representativeList.adapter = representativeListAdapter
@@ -145,15 +145,30 @@ class DetailFragment : BaseFragment() {
             val geocodeListener = @RequiresApi(33) object : Geocoder.GeocodeListener {
                 override fun onGeocode(addresses: MutableList<android.location.Address>) {
                     Timber.d("geoCodeLocation: ${addresses.first()}")
-                    viewModel.fetchInputFromAddressThenSearch(addresses.first().toAppAddress())
+                    val address = addresses.first().toAppAddress()
+                    if (address != null) {
+                        viewModel.fetchInputFromAddressThenSearch(addresses.first().toAppAddress())
+                    } else {
+                        Snackbar.make(
+                            requireView(), R.string.error_parse_location, Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
-            geocoder.getFromLocation(location.latitude, location.longitude, 1,geocodeListener)
+            geocoder.getFromLocation(location.latitude, location.longitude, 1, geocodeListener)
         } else {
-            geocoder.getFromLocation(location.latitude, location.longitude, 1,)
+            geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 ?.map { address ->
                     Timber.d("geoCodeLocation: $address")
-                    viewModel.fetchInputFromAddressThenSearch(address.toAppAddress())
+                    val convertedAddress = address.toAppAddress()
+
+                    if (convertedAddress != null) {
+                        viewModel.fetchInputFromAddressThenSearch(convertedAddress)
+                    } else {
+                        Snackbar.make(
+                            requireView(), R.string.error_parse_location, Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
                 ?.first()
         }
@@ -210,7 +225,7 @@ class DetailFragment : BaseFragment() {
                     )
 
                 } catch (sendEx: IntentSender.SendIntentException) {
-                    Timber.d( "Error getting location settings resolution: " + sendEx.message)
+                    Timber.d("Error getting location settings resolution: " + sendEx.message)
                 }
 
                 Snackbar.make(
